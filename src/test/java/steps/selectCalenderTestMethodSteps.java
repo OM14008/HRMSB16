@@ -9,7 +9,7 @@ import org.junit.Assert;
 import java.util.List;
 
 
-public class selectDateCalenderMethod extends CommonMethods {
+public class selectCalenderTestMethodSteps extends CommonMethods {
 
     @Given("user clicks on Recruitment button")
     public void user_clicks_on_recruitment_button() {
