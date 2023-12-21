@@ -26,12 +26,12 @@ public class selectCalenderTestMethodSteps extends CommonMethods {
             String elementFromDataTableRowExpectedDate = rowOfDataTable.get(3);
             if(i==0) {
                 click(recruitmentPage.dateOfApplicationDatePickerTriggerFromDate);
-                selectFromCalenderNoPagination(recruitmentPage.datePickerMonthFromDate, recruitmentPage.datePickerYearFromDate, recruitmentPage.datePickerTableFromDate, elementFromDataTableRowMonth, elementFromDataTableRowYear, elementFromDataTableRowDay);
+                selectFromCalenderWithDropDowns(recruitmentPage.datePickerMonthFromDate, recruitmentPage.datePickerYearFromDate, recruitmentPage.datePickerTableFromDate, elementFromDataTableRowMonth, elementFromDataTableRowYear, elementFromDataTableRowDay);
                 String actualDate = recruitmentPage.dateOfApplicationDatePickerTextFieldFromDate.getAttribute("value");
                 Assert.assertEquals(elementFromDataTableRowExpectedDate, actualDate);
             }else{
                 click(recruitmentPage.dateOfApplicationDatePickerTriggerToDate);
-                selectFromCalenderNoPagination(recruitmentPage.datePickerMonthToDate, recruitmentPage.datePickerYearToDate, recruitmentPage.datePickerTableFromDate, elementFromDataTableRowMonth, elementFromDataTableRowYear, elementFromDataTableRowDay);
+                selectFromCalenderWithDropDowns(recruitmentPage.datePickerMonthToDate, recruitmentPage.datePickerYearToDate, recruitmentPage.datePickerTableFromDate, elementFromDataTableRowMonth, elementFromDataTableRowYear, elementFromDataTableRowDay);
                 String actualDate = recruitmentPage.dateOfApplicationDatePickerTextFieldToDate.getAttribute("value");
                 Assert.assertEquals(elementFromDataTableRowExpectedDate, actualDate);
             }

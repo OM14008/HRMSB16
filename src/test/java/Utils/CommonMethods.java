@@ -8,18 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import steps.PageInitializer;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
+
 
 public class CommonMethods extends PageInitializer {
     public static WebDriver driver;
@@ -55,7 +51,8 @@ public class CommonMethods extends PageInitializer {
     }
 
     public static WebDriverWait getWait() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait;
     }
 
@@ -91,10 +88,25 @@ public class CommonMethods extends PageInitializer {
         return sdf.format(date);
     }
 
-    public static void selectFromDropDown(WebElement dropDown, String visibleText) {
+    public static void selectFromDropDown(WebElement dropDown, String selectionCriteria, String value) {
         Select select = new Select(dropDown);
-        select.selectByVisibleText(visibleText);
+        switch (selectionCriteria.toLowerCase()) {
+            case "text":
+                select.selectByVisibleText(value);
+                break;
+            case "index":
+                int index = Integer.parseInt(value);
+                select.selectByIndex(index);
+                break;
+            case "value":
+                select.selectByValue(value);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid selection criteria. " +
+                                                   "Use 'text', 'index', 'value'.");
+        }
     }
+
 
     public static String formatFullDate(String fullDate) {
         String[] monthNames = {
@@ -115,12 +127,12 @@ public class CommonMethods extends PageInitializer {
         return "Invalid";
     }
 
-    public static void selectFromCalenderNoPagination(WebElement datePickerMonth,WebElement datePickerYear,
-                                                      WebElement datePickerTable,String month,String year,String day) {
+    public static void selectFromCalenderWithDropDowns(WebElement datePickerMonth, WebElement datePickerYear,
+                                                       WebElement datePickerTable, String month, String year, String day) {
         click(datePickerMonth);
-        selectFromDropDown(datePickerMonth,month);
+        selectFromDropDown(datePickerMonth,"text",month);
         click(datePickerYear);
-        selectFromDropDown(datePickerYear,year);
+        selectFromDropDown(datePickerYear,"text",year);
         boolean dateFound = false;
         List<WebElement> rows = datePickerTable.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
