@@ -35,7 +35,7 @@ Feature: Adding employee in HRMS application
 
   @datatable
   Scenario: adding multiple employees using data table
-    When user enters firstname and middlename and lastname and verify employee has added
+    When user enters firstName and middleName and lastName and verify employee has added
       |firstName|middleName|lastName|
       |zara     |ms        |zaca    |
       |mary     |ms        |django  |
