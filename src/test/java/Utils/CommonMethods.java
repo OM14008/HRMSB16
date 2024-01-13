@@ -1,5 +1,6 @@
 package Utils;
 
+import io.cucumber.datatable.DataTable;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -14,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-
+import java.util.Map;
 
 
 public class CommonMethods extends PageInitializer {
@@ -128,23 +129,30 @@ public class CommonMethods extends PageInitializer {
     }
 
     public static void selectFromCalenderWithDropDowns(WebElement datePickerMonth, WebElement datePickerYear,
-                                                       WebElement datePickerTable, String month, String year, String day) {
-        click(datePickerMonth);
+                                                       WebElement datePickerTable, DataTable dateInfo) {
+        List<Map<String,String>> data = dateInfo.asMaps();
+        //we are extracting the data from dataTable in our feature file
+        for(Map<String,String> row : data){
+            String month = row.get("Month");
+            String year = row.get("Year");
+            String day = row.get("Day");
+            click(datePickerMonth);
         selectFromDropDown(datePickerMonth,"text",month);
         click(datePickerYear);
         selectFromDropDown(datePickerYear,"text",year);
         boolean dateFound = false;
         List<WebElement> rows = datePickerTable.findElements(By.tagName("tr"));
-        for (WebElement row : rows) {
-            List<WebElement> cells = row.findElements(By.tagName("td"));
+        for (WebElement calenderTable : rows) {
+            List<WebElement> cells = calenderTable.findElements(By.tagName("td"));
             for (WebElement cell : cells) {
                 String cellText = cell.getText();
                 if (cellText.equals(day)) {
                     cell.click();
-                    dateFound=true;
+                    dateFound = true;
                     break;
                 }
             }
+        }
             if(dateFound){
                 break;
             }
